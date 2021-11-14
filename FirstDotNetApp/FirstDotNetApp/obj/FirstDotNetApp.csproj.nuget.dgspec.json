@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\viveksrivastava01\\Desktop\\Assignments\\FirstDotNetApp\\FirstDotNetApp\\FirstDotNetApp.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\viveksrivastava01\\Desktop\\Assignments\\FirstDotNetApp\\FirstDotNetApp\\FirstDotNetApp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\viveksrivastava01\\Desktop\\Assignments\\FirstDotNetApp\\FirstDotNetApp\\FirstDotNetApp.csproj",
+        "projectName": "FirstDotNetApp",
+        "projectPath": "C:\\Users\\viveksrivastava01\\Desktop\\Assignments\\FirstDotNetApp\\FirstDotNetApp\\FirstDotNetApp.csproj",
+        "packagesPath": "C:\\Windows\\system32\\config\\systemprofile\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\viveksrivastava01\\Desktop\\Assignments\\FirstDotNetApp\\FirstDotNetApp\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\FirstDotNetPipeline@tmp\\artifactory\\javatmpdir\\artifactory.plugin.nuget.config10374236668518448328.tmp"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "http://localhost:8082/artifactory/api/nuget/FirstDotNet": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.11.1, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

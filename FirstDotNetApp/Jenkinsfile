@@ -1,0 +1,130 @@
+pipeline{
+    agent any
+   
+   
+    
+    environment {
+         
+        ScannerHome = tool 'SonarScannerforMSBuild'
+        dotnet ='C:\\Program Files (x86)\\dotnet\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe'
+        //docker ='C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe'
+        //sqScannerMsBuildHome ="Scanner_for_MSBuild_5."
+        dockerImage=''
+        DOCKER_SCAN_SUGGEST=false
+        //registry='srivivek55/firstdotnet'
+        imagename = "srivivek55/firstdotnet"
+        registryCredential = 'dockerpass'
+    
+        }
+    stages{
+        stage('Code Checkout'){
+            steps{
+                checkout([$class: 'GitSCM', branches: [[name: '*/Assignment1']], extensions: [], userRemoteConfigs: [[credentialsId: 'de5ea26b-afe9-4bb2-9c7c-87ed4a5d37af', url: 'https://git.nagarro.com/freshertraining2021/viveksrivastava01.git']]])
+            }
+        }
+     
+        stage('Code Build'){
+            steps{
+                bat 'dotnet build "C:\\MYWORKSPACE\\FirstDotNetApp\\FirstDotNetApp.sln"  --configuration Release'
+            }
+     
+        }       
+        /*stage('SonarQube analysis'){
+            //def scannerHome = tool 'SonarScannerforMSBuild'
+            steps{
+                withSonarQubeEnv('SonarQube'){
+                    bat "dotnet ${ScannerHome}\\SonarScanner.MSBuild.dll begin /k:\"FirstDotNet\""
+                    bat "dotnet build C:\\MYWORKSPACE\\FirstDotNetApp\\FirstDotNetApp.sln"
+                    bat "dotnet ${ScannerHome}\\SonarScanner.MSBuild.dll end"
+                    
+                    //bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe end"
+                    
+                    //bat "D:\sonar-scanner-cli-4.6.2.2472-windows\sonar-scanner-4.6.2.2472-windows\bin\SonarQube.Scanner.MSBuild.exe begin /k:myKey"
+                    //bat 'MSBuild.exe /t:Rebuild'
+                    //bat "D:\sonar-scanner-cli-4.6.2.2472-windows\sonar-scanner-4.6.2.2472-windows\bin\SonarQube.Scanner.MSBuild.exe end"
+                   
+                    //bat 'dotnet ${Scanner_for_MSBuild_5.3}/SonarScanner.MSBuild.exe begin'
+                    //bat Scanner_for_MSBuild_5.3.MSBuild.exe"'
+                    //bat '"C:\\MYWORKSPACE\\FirstDotNetApp\\FirstDotNetApp.sln" /t:Rebuild'
+                    //bat 'dotnet ${MSBUILD_SQ_SCANNER_HOME}/SonarScanner.MSBuild.dll end'
+                   // bat 'SonarScanner.MSBuild.exe end'
+                  
+                //bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe end"
+                }
+                }   
+            
+                
+        }
+        stage('Artifactory Build'){
+            steps{
+                 rtDotnetResolver(
+                     id: 'FirstDotNet',
+                     serverId: 'Artifactory',
+                     repo: 'example-repo-local'
+                     )
+                //rtDotnetRun(
+                  //  resolverId: "FirstDotNet",
+                    //args: "C:\\MYWORKSPACE\\FirstDotNetApp\\FirstDotNetApp.sln",
+                    //javaArgs: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005",
+                    //apiProtocol: "v3"
+                    //buildName: 'my-build-name',
+                    //buildNumber: '17',
+                    //project: 'my-project-key'
+                  //  )
+                rtPublishBuildInfo (
+                    serverId: 'Artifactory',
+                    //buildName: 'holyFrog',
+                    //buildNumber: '42',
+                    //project: 'my-project-key'
+                )
+               
+                    
+             }
+         }*/
+        stage('Building image') {
+            steps{
+                script{
+                    //bat 'docker build -t firstdotnetimg:latest .'
+                    dockerImage=docker.build imagename
+                }
+    
+                
+                
+                
+            }
+            
+        }
+        stage('Deploy Image') {
+            steps{
+                script{
+                    docker.withRegistry( '', registryCredential ) {
+                        //dockerImage.push('1') 
+                        dockerImage.push('latest')
+                        
+                    }
+                }  
+                
+                
+            }
+            
+        }
+        stage('Remove Unused docker image') {
+            steps{
+               // bat "docker rmi $imagename:1"
+                bat "docker rmi $imagename:latest"
+                
+          }
+            
+        }
+        stage('Docker  run'){
+            steps{
+                script{
+                    //docker.run('-d --name mycont -p 8091:8080 firstdotnetimg')
+                    bat 'docker run -d --name mycont3 -p 5001:8080 srivivek55/firstdotnet'
+                }
+            }
+            
+        }
+        
+    }
+}
